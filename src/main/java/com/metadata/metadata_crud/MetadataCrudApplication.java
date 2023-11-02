@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @EntityScan("com.metadata.metadata_crud.entity")
 @SpringBootApplication
-public class MetadataCrudApplication {
+public class MetadataCxrudApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MetadataCrudApplication.class, args);
