@@ -1,129 +1,79 @@
-package com.metadata.metadata_crud.service.impl;
-import java.util.ArrayList;
-import com.metadata.metadata_crud.repository.user.UserRepository;
-import lombok.AllArgsConstructor;
-import com.metadata.metadata_crud.entity.user.User;
-import org.springframework.stereotype.Service;
+package com.metadata.metadata_crud.service.impl.user;
 
+import com.metadata.metadata_crud.entity.user.User;
+import com.metadata.metadata_crud.repository.user.UserRepository;
+
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 import java.util.List;
+
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
-    private UserRepository userRepository;
+
+    @Autowired
+    @Qualifier("customerTransactionManager") // Specify the desired transaction manager
+    private PlatformTransactionManager customerTransactionManager;
+
+    private final UserRepository userRepository;
 
     @Override
     public User createKey(User user) {
-        List<User> users = userRepository.findByKeyy(user.getKeyy());
 
-        for (User existingUser : users) {
-            if (existingUser.getUsername() == null) {
 
-                throw new RuntimeException("User with a null username found.");
-            }
-        }
+            return userRepository.save(user);
 
-        // Continue processing and save the user if no null usernames are found.
-        return userRepository.save(user);
+
+
     }
-
-
 
 
     @Override
-    public List<User> getUserByCateg(String userId) {
-        List<User> allUsers = userRepository.findAllByCategoryContaining(userId);
-        List<User> filteredUsers = new ArrayList<>();
-
-        for (User user : allUsers) {
-            String username = user.getUsername();
-            if (username == null || username.isEmpty()) {
-                filteredUsers.add(user);
-            }
-        }
-
-        return filteredUsers;
+    public List<User> getUserByCateg(String category) {
+        return userRepository.findAllByCategoryContaining(category);
     }
-
-
 
     @Override
     public List<User> getAllUsers() {
-        List<User> allUsers = userRepository.findAll();
+        return userRepository.findAll();
+    }
 
-        List<User> filteredUsers = new ArrayList<>();
+    @Override
+    public User updateId(String id, User newUser) {
+        Optional<User> existingUser = userRepository.findByKeyy(id);
+        if (existingUser.isPresent()) {
+            User originalUser = existingUser.get();
 
-        for (User user : allUsers) {
-            String username = user.getUsername();
-            if (username == null || username.isEmpty()) {
-                filteredUsers.add(user);
+            if (newUser.getKeyy() != null && !newUser.getKeyy().isEmpty()) {
+                originalUser.setKeyy(newUser.getKeyy());
             }
-        }
 
-        return filteredUsers;
-    }
-
-
-    @Override
-    public List<User> updateId(User userr) {
-        List<User> users = userRepository.findAllByKeyy(userr.getKeyy());
-        List<User> filteredUsers = new ArrayList<>();
-
-        for (User user : users) {
-            String username = user.getUsername();
-            if (username == null) {
-                // Update the attributes of the user
-                user.setUsername(userr.getUsername());
-                user.setCategory(userr.getCategory());
-                user.setValue(userr.getValue());
-                filteredUsers.add(user);
+            if (newUser.getValue() != null && !newUser.getValue().isEmpty()) {
+                originalUser.setValue(newUser.getValue());
             }
-        }
 
-        // Save the updated users in a batch
-        userRepository.saveAll(filteredUsers);
-
-        return filteredUsers;
-    }
-
-
-
-    @Override
-    public List<User> deleteKeyy(String userId) {
-        List<User> allUsers = userRepository.findAllByKeyy(userId);
-        List<User> filteredUsers = new ArrayList<>();
-
-        for (User user : allUsers) {
-            String username = user.getUsername();
-            if (username == null) {
-                filteredUsers.add(user);
-                userRepository.delete(user); // Delete the user with null username
+            if (newUser.getCategory() != null && !newUser.getCategory().isEmpty()) {
+                originalUser.setCategory(newUser.getCategory());
             }
+
+            return userRepository.save(originalUser);
         }
-
-        return filteredUsers;
+        return null;
     }
 
 
     @Override
-    public List<User> getAllCross(){
-        return userRepository.findByUsernameNotNull();
+    @Transactional("customerTransactionManager")
+    public void deleteUser(String userId) {
+        userRepository.deleteByKeyy(userId);
     }
-    @Override
-    public  User createKeyCross(User user) {
-      return  userRepository.save(user);
-    }
-    @Override
-    public List<User> getUserByCategCross(String Id){
-        List<User> allUsers = userRepository.findAllByCategoryContaining(Id);
-        List<User> filteredUsers = new ArrayList<>();
 
-        for (User user : allUsers) {
-            String username = user.getUsername();
-            if (username != null ) {
-                filteredUsers.add(user);
-            }
-        }
-
-        return filteredUsers;
-}}
+}

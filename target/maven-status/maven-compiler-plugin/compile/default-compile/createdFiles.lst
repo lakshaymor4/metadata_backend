@@ -1,0 +1,13 @@
+com\metadata\metadata_crud\controllers\UserController.class
+com\metadata\metadata_crud\config\metadatconfig.class
+com\metadata\metadata_crud\service\impl\user\UserService.class
+com\metadata\metadata_crud\config\syssourceconfig.class
+com\metadata\metadata_crud\entity\user\User.class
+com\metadata\metadata_crud\repository\user\UserRepository.class
+com\metadata\metadata_crud\service\impl\sysource\SyssourceImpl.class
+com\metadata\metadata_crud\repository\sourcesys\Sourcesystemrepo.class
+com\metadata\metadata_crud\MetadataCrudApplication.class
+com\metadata\metadata_crud\service\impl\sysource\Syssource.class
+com\metadata\metadata_crud\service\impl\user\UserServiceImpl.class
+com\metadata\metadata_crud\config\config\CorsConfig.class
+com\metadata\metadata_crud\entity\sourcesys\sourcesystem.class

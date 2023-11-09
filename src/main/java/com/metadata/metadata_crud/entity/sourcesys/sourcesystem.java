@@ -1,5 +1,4 @@
-package com.metadata.metadata_crud.entity.user;
-
+package com.metadata.metadata_crud.entity.sourcesys;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,9 +10,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "data_meta")
-public class User {
-
+@Table(name = "sourcesystem")
+public class sourcesystem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,5 +22,7 @@ public class User {
     private String keyy;
     @Column
     private String Value;
+    @Column
+    private String username;
 
 }
