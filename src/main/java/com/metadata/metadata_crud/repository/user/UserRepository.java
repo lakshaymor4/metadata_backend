@@ -17,5 +17,9 @@ public interface UserRepository extends JpaRepository<User, String> {
    List<User> findAllByKeyy(String userId);
 
 
+
+
+
+
 //    Optional<User> findAllByCategory(String Category);
 }

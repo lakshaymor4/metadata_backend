@@ -1,5 +1,5 @@
 package com.metadata.metadata_crud.service.impl;
-import com.metadata.metadata_crud.entity.User;
+import com.metadata.metadata_crud.entity.user.User;
 import java.util.List;
 public interface UserService {
     User createKey(User user);

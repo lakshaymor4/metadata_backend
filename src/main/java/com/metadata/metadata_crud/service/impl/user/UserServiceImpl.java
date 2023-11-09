@@ -1,15 +1,11 @@
 package com.metadata.metadata_crud.service.impl;
 import java.util.ArrayList;
-import com.metadata.metadata_crud.repository.UserRepository;
+import com.metadata.metadata_crud.repository.user.UserRepository;
 import lombok.AllArgsConstructor;
-import com.metadata.metadata_crud.entity.User;
-import org.apache.logging.log4j.util.Strings;
+import com.metadata.metadata_crud.entity.user.User;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -22,8 +18,7 @@ public class UserServiceImpl implements UserService {
 
         for (User existingUser : users) {
             if (existingUser.getUsername() == null) {
-                // Handle the case where a user with a null username is found.
-                // You can throw a custom exception or handle it as needed.
+
                 throw new RuntimeException("User with a null username found.");
             }
         }

@@ -24,6 +24,5 @@ public class User {
     private String keyy;
     @Column
     private String Value;
-    @Column
-    private String username;
+
 }
